@@ -1358,7 +1358,7 @@
   }
   .ctn-bg-image {
     position: absolute;
-    top: -20px;
+    top: -160px;
     right: -40px;
     width: 1260px;
     height: 1260px;
@@ -1366,10 +1366,12 @@
     background-size: contain;
     background-repeat: no-repeat;
     background-position: top right;
-    opacity: 0.13;
+    opacity: 0.28;
     pointer-events: none;
     z-index: 1;
-    filter: grayscale(100%);
+    filter: grayscale(60%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 80% at 70% 30%, black 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 75% 80% at 70% 30%, black 30%, transparent 75%);
   }
   .ctn-section::before {
     width: 700px; height: 700px;
@@ -1841,11 +1843,11 @@
     .exp-item { grid-template-columns: 160px 1fr; gap: 2rem; }
     .tools-grid { grid-template-columns: repeat(2, 1fr); }
     .events-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
       grid-template-rows: none;
       gap: 10px;
       width: 100%;
-      max-width: 480px;
+      max-width: 100%;
       margin: 0 auto;
       box-sizing: border-box;
     }
@@ -1880,6 +1882,7 @@
     /* Sections */
     section { padding: 3.5rem 1.5rem; }
     .ctn-section { padding: 4rem 1.5rem; }
+    .ctn-bg-image { width: 780px; height: 780px; top: -80px; right: -60px; }
     .ctn-grid { grid-template-columns: 1fr; gap: 2rem; }
     .ctn-stats { flex-direction: row; border-left: none; border-top: 1px solid rgba(184,146,90,0.2); padding-left: 0; padding-top: 1.5rem; justify-content: space-around; }
     .ctn-events-row { grid-template-columns: 1fr; }
@@ -1941,6 +1944,8 @@
     section { padding: 2.8rem 1rem; }
     .contact-section { padding: 2.8rem 1rem; }
     .events-section { padding: 2.8rem 1rem; }
+    .ctn-bg-image { width: 500px; height: 500px; top: -40px; right: -30px; }
+    .ctn-headline { font-size: 1.25rem; }
     .container { max-width: 100%; }
 
     /* Section headers */
@@ -1970,11 +1975,11 @@
 
     /* Events */
     .events-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
       grid-template-rows: none;
       gap: 8px;
       width: 100%;
-      max-width: 400px;
+      max-width: 100%;
       margin: 0 auto;
       box-sizing: border-box;
     }
@@ -2033,6 +2038,8 @@
     .tools-grid { grid-template-columns: 1fr; }
     .comp-grid { grid-template-columns: repeat(2, 1fr); }
     section { padding: 2.2rem 0.9rem; }
+    .ctn-bg-image { width: 380px; height: 380px; top: -30px; right: -20px; }
+    .ctn-headline { font-size: 1.1rem; }
     .nav-name { font-size: 0.9rem; }
     .projects-grid { gap: 0.85rem; }
     .project-thumb { height: 170px; }
