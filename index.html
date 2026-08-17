@@ -525,7 +525,7 @@
     grid-column: 1 / -1;
     position: relative;
     border-radius: 4px;
-    background: #1a1208;
+    background: rgba(10,10,10,0.45);
     border: 1px solid rgba(184,146,90,0.18);
     min-width: 0;
   }
@@ -995,6 +995,9 @@
     .kbp-tile:nth-child(1), .kbp-tile:nth-child(2), .kbp-tile:nth-child(3), .kbp-tile:nth-child(4) {
       grid-column: auto; grid-row: auto; height: 220px; transform: none;
     }
+    /* Swap the bottom poster with the photo beside it on mobile */
+    .kbp-tile:nth-child(3) { order: 4; }
+    .kbp-tile:nth-child(4) { order: 3; }
     .kbp-tile:nth-child(1):hover, .kbp-tile:nth-child(2):hover, .kbp-tile:nth-child(3):hover, .kbp-tile:nth-child(4):hover {
       transform: translateY(-4px);
     }
@@ -1199,6 +1202,8 @@
   .project-card {
     background: var(--white);
     border-radius: 2px;
+    border-top: 3px solid var(--gold);
+    box-shadow: 0 4px 20px rgba(42,82,69,0.1);
     overflow: hidden;
     transition: transform 0.25s, box-shadow 0.25s;
     text-decoration: none;
@@ -1207,7 +1212,7 @@
   }
   .project-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 48px rgba(42,82,69,0.14);
+    box-shadow: 0 20px 48px rgba(42,82,69,0.18);
   }
   .project-thumb {
     width: 100%;
@@ -1917,7 +1922,7 @@
   .mobile-nav-close {
     position: absolute;
     top: 1.2rem;
-    right: 1.2rem;
+    left: 1.2rem;
     background: none;
     border: 1.5px solid rgba(184,146,90,0.45);
     border-radius: 50%;
@@ -1992,7 +1997,15 @@
       box-sizing: border-box;
     }
     .event-tile:first-child { grid-row: auto; grid-column: auto; }
-    .event-tile { height: 230px; width: 100%; }
+    .event-tile { height: auto; width: 100%; }
+    .event-tile-inner { display: flex; flex-direction: column-reverse; }
+    .event-scene { height: 230px; flex-shrink: 0; }
+    .event-label {
+      position: static;
+      text-align: left;
+      padding: 0.6rem 3rem 0.7rem 0;
+    }
+    .event-label-venue, .event-label-name { text-shadow: none; }
     .carousel-card { flex: 0 0 100%; width: 100%; box-sizing: border-box; }
     .carousel-track { gap: 0; width: 100%; }
     .hero-name { font-size: clamp(2.8rem, 5vw, 4.5rem); }
@@ -2022,7 +2035,11 @@
     /* Sections */
     section { padding: 3.5rem 1.5rem; }
     .ctn-section { padding: 4rem 1.5rem; }
-    .ctn-bg-image { width: 780px; height: 780px; top: -80px; right: -60px; }
+    .ctn-bg-image {
+      width: 710px; height: 710px; top: 0; right: 0;
+      -webkit-mask-image: radial-gradient(ellipse 95% 95% at 65% 20%, black 55%, transparent 92%);
+      mask-image: radial-gradient(ellipse 95% 95% at 65% 20%, black 55%, transparent 92%);
+    }
     .ctn-grid { grid-template-columns: 1fr; gap: 2rem; }
     .ctn-stats { flex-direction: row; border-left: none; border-top: 1px solid rgba(184,146,90,0.2); padding-left: 0; padding-top: 1.5rem; justify-content: space-around; }
     .ctn-events-row { grid-template-columns: 1fr; }
@@ -2036,8 +2053,41 @@
     .about-photo-deco { display: none; }
 
     /* Competencies */
-    .comp-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .comp-grid {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      gap: 1rem;
+      padding-bottom: 0.5rem;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .comp-grid::-webkit-scrollbar { display: none; }
+    .comp-grid { perspective: 1200px; }
+    .comp-card {
+      flex: 0 0 82%;
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      transform-style: preserve-3d;
+      transform-origin: left center;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      will-change: transform, opacity;
+      transition: none;
+    }
     .comp-card { padding: 1.4rem; }
+    .comp-card::after {
+      content: '→';
+      position: absolute;
+      bottom: 0.3rem;
+      right: 1rem;
+      font-size: 1.1rem;
+      color: var(--gold);
+      opacity: 0.75;
+      pointer-events: none;
+    }
 
     /* Experience */
     .exp-item { grid-template-columns: 1fr; gap: 0.4rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; }
@@ -2084,7 +2134,11 @@
     section { padding: 2.8rem 1rem; }
     .contact-section { padding: 2.8rem 1rem; }
     .events-section { padding: 2.8rem 1rem; }
-    .ctn-bg-image { width: 500px; height: 500px; top: -40px; right: -30px; }
+    .ctn-bg-image {
+      width: 550px; height: 550px; top: 0; right: 0;
+      -webkit-mask-image: radial-gradient(ellipse 95% 95% at 65% 20%, black 55%, transparent 92%);
+      mask-image: radial-gradient(ellipse 95% 95% at 65% 20%, black 55%, transparent 92%);
+    }
     .ctn-headline { font-size: 1.25rem; }
     .container { max-width: 100%; }
 
@@ -2101,8 +2155,8 @@
     .about-stats-col > div { padding-left: 1rem; }
 
     /* Competencies */
-    .comp-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
-    .comp-card { padding: 1.2rem; }
+    .comp-grid { gap: 0.8rem; }
+    .comp-card { flex: 0 0 86%; padding: 1.2rem; }
     .comp-card h3 { font-size: 1rem; }
     .comp-card p { font-size: 0.82rem; }
 
@@ -2123,7 +2177,8 @@
       margin: 0 auto;
       box-sizing: border-box;
     }
-    .event-tile { height: 190px; width: 100%; }
+    .event-tile { height: auto; width: 100%; }
+    .event-scene { height: 190px; }
     .events-caption { font-size: 0.85rem; margin-bottom: 2rem; }
     .carousel-card { flex: 0 0 100%; width: 100%; padding: 1.3rem; scroll-snap-stop: always; gap: 0.6rem; box-sizing: border-box; }
     .carousel-track { gap: 0; width: 100%; }
@@ -2176,9 +2231,13 @@
     .hero-name { font-size: clamp(2rem, 11vw, 2.8rem); }
     .hero-left { padding: 2rem 1rem 1.8rem; }
     .tools-grid { grid-template-columns: 1fr; }
-    .comp-grid { grid-template-columns: repeat(2, 1fr); }
+    .comp-card { flex: 0 0 90%; }
     section { padding: 2.2rem 0.9rem; }
-    .ctn-bg-image { width: 380px; height: 380px; top: -30px; right: -20px; }
+    .ctn-bg-image {
+      width: 440px; height: 440px; top: 0; right: 0;
+      -webkit-mask-image: radial-gradient(ellipse 95% 95% at 65% 20%, black 55%, transparent 92%);
+      mask-image: radial-gradient(ellipse 95% 95% at 65% 20%, black 55%, transparent 92%);
+    }
     .ctn-headline { font-size: 1.1rem; }
     .nav-name { font-size: 0.9rem; }
     .projects-grid { gap: 0.85rem; }
@@ -2336,6 +2395,12 @@
 
 <!-- MOBILE NAV OVERLAY -->
 <div class="mobile-nav-overlay" id="mobileNav">
+  <button class="mobile-nav-close" aria-label="Close menu" onclick="closeMobileNav()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round">
+      <line x1="5" y1="5" x2="19" y2="19" />
+      <line x1="19" y1="5" x2="5" y2="19" />
+    </svg>
+  </button>
   <a href="#about" onclick="closeMobileNav()">About</a>
   
   <a href="#events" onclick="closeMobileNav()">Events</a>
@@ -3215,6 +3280,70 @@
   btnPrev.addEventListener('click', () => goTo(current - 1));
   btnNext.addEventListener('click', () => goTo(current + 1));
   dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.idx)));
+})();
+</script>
+
+<!-- Core Competencies page-turn swipe (mobile) -->
+<script>
+(function() {
+  const grid = document.querySelector('.comp-grid');
+  if (!grid) return;
+  const cards = Array.from(grid.querySelectorAll('.comp-card'));
+  if (!cards.length) return;
+
+  let cardWidth = 0;
+  let cardStep = 0;
+  let gridWidth = 0;
+  let active = false;
+  let raf = null;
+
+  // All expensive DOM reads happen here — once on load/resize, never during scroll.
+  function measure() {
+    active = window.innerWidth <= 900;
+    if (!active) return;
+    const styles = getComputedStyle(grid);
+    const gap = parseFloat(styles.columnGap || styles.gap || '0') || 0;
+    cardWidth = cards[0].getBoundingClientRect().width || 1;
+    cardStep = cardWidth + gap;
+    gridWidth = grid.clientWidth;
+  }
+
+  // Runs every scroll frame — only reads scrollLeft (cheap) and writes styles.
+  function render() {
+    raf = null;
+    if (!active) {
+      cards.forEach(c => { c.style.transform = ''; c.style.opacity = ''; });
+      return;
+    }
+    const centerPos = grid.scrollLeft + gridWidth / 2;
+    cards.forEach((card, i) => {
+      const cardCenterPos = i * cardStep + cardWidth / 2;
+      const t = (cardCenterPos - centerPos) / cardWidth;
+      // Fixed left-edge pivot for every card — only cards at/behind center rotate away,
+      // like a page being turned shut. Upcoming cards stay flat until their turn.
+      const clamped = Math.max(-1, Math.min(0, t));
+      const angle = clamped * 100;
+      const opacity = 1 - Math.min(1, Math.abs(clamped)) * 0.85;
+      card.style.transform = `rotateY(${angle}deg)`;
+      card.style.opacity = opacity;
+    });
+  }
+
+  function onScroll() {
+    if (raf) return;
+    raf = requestAnimationFrame(render);
+  }
+
+  function onResize() {
+    measure();
+    onScroll();
+  }
+
+  grid.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onResize);
+  window.addEventListener('load', onResize);
+  measure();
+  render();
 })();
 </script>
 
